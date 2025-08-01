@@ -1,0 +1,41 @@
+# Dialog script for quadspinner::gaea_terrain_color_visualizer::1.0 automatically generated
+
+{
+    name	quadspinner::gaea_terrain_color_visualizer::1.0
+    script	quadspinner::terrain_color_visualizer::1.0
+    label	"Gaea Terrain Color Visualizer"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Sub-Network Input #1"
+    inputlabel	2	"Sub-Network Input #2"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+
+    parm {
+        name    "mode"
+        label   "Visualize"
+        type    ordinal
+        default { "0" }
+        menu {
+            "0" "Regular Mask"
+            "1" "Terrain Color"
+        }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "channels"
+        label   "Channels"
+        type    string
+        default { "color.r color.g color.b" }
+        disablewhen "{ mode == 0 }"
+        menutoggle {
+            [ "import terraintoolutils" ]
+            [ "return terraintoolutils.buildNameMenu(kwargs['node'], 0)" ]
+            language python
+        }
+        parmtag { "script_callback_language" "python" }
+    }
+}

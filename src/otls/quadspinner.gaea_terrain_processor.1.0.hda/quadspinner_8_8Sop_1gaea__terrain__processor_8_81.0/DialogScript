@@ -1,0 +1,101 @@
+# Dialog script for quadspinner::gaea_terrain_processor::1.0 automatically generated
+
+{
+    name	quadspinner::gaea_terrain_processor::1.0
+    script	quadspinner::gaea_core::1.0
+    label	"Gaea  Terrain Processor"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Heightfield In"
+    inputlabel	2	"Sub-Network Input #2"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	"Heightfield Out"
+
+    parm {
+        name    "terrain_file"
+        label   "Gaea 2.2 Terrain File"
+        type    file
+        joinnext
+        default { "" }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "generate_parameters"
+        label   "Generate Parameters"
+        type    button
+        default { "0" }
+        parmtag { "script_callback" "kwargs['node'].hm().GenerateParms(kwargs)" }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "execute"
+        label   "Cook"
+        type    button
+        joinnext
+        default { "0" }
+        parmtag { "script_callback" "kwargs['node'].hm().ManualCook(kwargs)" }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "autocook"
+        label   "Auto Cook"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "folder0"
+        label   "Advanced"
+
+        parm {
+            name    "extra_data"
+            label   "Extra Data"
+            type    string
+            default { "$OS" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cachedir"
+            label   "Cache Directory"
+            type    directory
+            default { "$HIP/gaea_cache/" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "custom_swarm_exe"
+            label   "Custom Gaea.SwarmHost.exe"
+            type    toggle
+            joinnext
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "swarm_exe"
+            label   "Exe"
+            type    file
+            nolabel
+            default { "" }
+            disablewhen "{ custom_swarm_exe == 0 }"
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "sepparm2"
+        label   "Separator"
+        type    separator
+        default { "" }
+    }
+    parm {
+        name    "sepparm"
+        label   "Spacer"
+        type    separator
+        default { "" }
+        parmtag { "sidefx::layout_height" "small" }
+        parmtag { "sidefx::look" "blank" }
+    }
+}

@@ -1,0 +1,22 @@
+from gaea import processing_utils 
+from importlib import reload
+
+
+def GenerateParms(kwargs):
+    ##### DEBUGGING ONLY #####
+    reload(processing_utils)
+    
+    
+    node = kwargs['node']
+    terrain_file = node.parm("terrain_file").evalAsString()
+    gaea_terrain_definition = processing_utils.GaeaTerrainDefinition(terrain_file=terrain_file)
+    
+    processing_utils.set_houdini_parm_templategroup(node, gaea_terrain_definition)
+
+def ManualCook(kwargs):
+    try:
+        node = kwargs['node']
+        node.node("COOKING_ENGINE").cook(force=True)
+        node.node("IMPORT_ENGINE").cook(force=True)
+    except hou.Error as e:
+        raise e

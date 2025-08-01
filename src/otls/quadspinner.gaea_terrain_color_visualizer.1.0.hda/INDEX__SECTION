@@ -1,0 +1,14 @@
+Operator:     quadspinner::gaea_terrain_color_visualizer::1.0
+Label:        Gaea Terrain Color Visualizer
+Path:         oplib:/quadspinner::Sop/gaea_terrain_color_visualizer::1.0?quadspinner::Sop/gaea_terrain_color_visualizer::1.0
+Icon:         opdef:/quadspinner::Sop/gaea_terrain_color_visualizer::1.0?IconSVG
+Table:        Sop
+License:      
+Extra:        inputcolors='1 "RGB 0.700195 0.700195 0.700195" ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
+User:         
+Inputs:       1 to 1
+Subnet:       true
+Python:       false
+Empty:        false
+Modified:     Sun Jun 29 18:00:50 2025
+

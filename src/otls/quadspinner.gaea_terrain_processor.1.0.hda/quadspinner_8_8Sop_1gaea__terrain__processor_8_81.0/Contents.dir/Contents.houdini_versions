@@ -1,0 +1,14 @@
+{
+	"values":["20.5.613"
+	],
+	"indexes":{
+		"hdaroot/IN.userdata":0,
+		"hdaroot/LAYER_CHECK.userdata":0,
+		"hdaroot/COOKING_ENGINE.userdata":0,
+		"hdaroot/merge.userdata":0,
+		"hdaroot/output0.userdata":0,
+		"hdaroot/filter.userdata":0,
+		"hdaroot/IMPORT_ENGINE.userdata":0,
+		"hdaroot/auto_cook.userdata":0
+	}
+}

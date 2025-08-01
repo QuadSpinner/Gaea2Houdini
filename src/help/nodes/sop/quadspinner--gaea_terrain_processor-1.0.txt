@@ -1,0 +1,37 @@
+= Gaea Terrain Processor =
+
+#type: node
+#context: sop
+#internal: quadspinner::gaea_terrain_processor::1.0
+#icon: gaea
+#tags: sidefxlabs,  model, gamedev, terrain
+
+""" This bridge allows you to run .terrain files from Gaea inside Houdini. """
+
+This sop allows you to execute .terrain files authored in Gaea 2.2.0.0 or newer as part of your sop network.
+After authoring .terrain files with inputs, outputs and parameters configured, you can generate the corresponding parameters on this node.
+Upon configuring your parameters, you can bind in and outputs and cook the node. This will run Gaea Swarm in the background and produce a local cache on disk.
+
+@parameters
+    Gaea 2.2 Terrain File:
+        #id: terrain_file
+        Path to a .terrain file on disk with exposed parameters, inputs and outputs.
+    Generate Parameters:
+        #id: generate_parameters
+	When pressed, will generate a parameter interface containing the exposed parameters, inputs and outputs for the specified .terrain file.
+    Cook:
+        #id: execute
+        When pressed, will invalidate the local cache and recook the .terrain file with the current parameters, inputs and outputs.
+    Auto Cook:
+        #id: autocook
+        When checked, the node will automatically recook when inputs or parameters change. When disabled, will only read from the local cache on disk and not recook during any changes in inputs or parameters.
+    == Advanced ==
+    Extra Data:
+        #id: extra_data
+        The value specified in this parameter is used for constructing the cache id on disk. It is therefore important to configure this with a unique value when using PDG or Foreach loops to cook this node. For example the iteration number, or a unique value for the active workitem.
+    Cache Directory:
+        #id: cachedir
+        The directory in which the local cache for the Gaea process will be stored. If you delete this cache, the node will need to recook.
+    Custom Gaea.SwarmHost.exe:
+        #id: custom_swarm_exe
+	When enabled, this allows you to specify the executable that should be used to run Gaea Swarm. If disabled, the plugin will look in the registry where Gaea is installed.
