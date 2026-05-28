@@ -12,6 +12,8 @@ from enum import Enum
 
 import hou
 
+CHAR_ENCODING = "utf-8" # This is the encoding used for all file read/write operations to ensure compatibility with people using non-English characters in their file paths or Gaea parameters.
+
 SUPPORTED_TERRAIN_RESOLUTIONS = [512, 1024, 2048, 4096, 8192]
 GENERATED_FOLDERS_INTERNAL = ["gaea_generated_parms", "gaea_generated_bindings"]
 GENERATED_FOLDERS_LABEL = ["Gaea Parameters", "Gaea Layer Bindings"]
@@ -238,7 +240,7 @@ class GaeaTerrainDefinition:
         """
         if not os.path.isfile(self.terrain_file):
             raise FileNotFoundError(NodeMessages.FILE_NOT_FOUND + self.terrain_file)
-        with open(self.terrain_file, "r", encoding="utf-8") as in_file:
+        with open(self.terrain_file, "r", encoding=CHAR_ENCODING) as in_file:
             terrain_data = json.load(in_file)
 
         terrain_assets = terrain_data.get("Assets", {})
@@ -516,7 +518,7 @@ def export_houdini_layers(
             data.tofile(file)
 
         # Write metadata
-        with open(export_path + ".meta", "w") as file:
+        with open(export_path + ".meta", "w", encoding=CHAR_ENCODING) as file:
             json.dump(
                 {
                     "$id": str(1),
@@ -606,7 +608,7 @@ def run_gaea_swarm(
     
     json.dump(
         node_parm_dict,
-        open(node_parm_path, "w"),
+        open(node_parm_path, "w", encoding=CHAR_ENCODING),
         indent=4,
     )
 
@@ -646,7 +648,7 @@ def run_gaea_swarm(
             "Running Gaea Swarm", open_interrupt_dialog=True
         ) as gaea_process:
             gaea_process.updateProgress(percentage=-1.0)
-            with open(log_path, "w", encoding="utf-8") as log_file:
+            with open(log_path, "w", encoding=CHAR_ENCODING) as log_file:
                 p = subprocess.Popen(
                     cmd,
                     stdout=subprocess.PIPE,
@@ -729,7 +731,7 @@ def import_houdini_layers(
         if not os.path.isfile(metadata_path) or not os.path.isfile(data_path):
             raise FileNotFoundError(NodeMessages.INVALID_NODE_CACHE)
 
-        with open(metadata_path, "r") as file:
+        with open(metadata_path, "r", encoding=CHAR_ENCODING) as file:
             metadata = json.load(file)
         import_resolution = int(metadata.get("Resolution"))
         layer_channels = int(metadata.get("Channels", 1))
@@ -874,7 +876,7 @@ def ensure_gaea_service(gaea_executable: str) -> None:
     if platform.system() == "Windows":
         try:
             process = subprocess.run(
-                ["tasklist"],
+                ["tasklist", "/nh"],
                 stdout=subprocess.PIPE,
                 text=True,
                 startupinfo=get_startupinfo(),
